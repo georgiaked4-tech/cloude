@@ -4,9 +4,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-This is the `cloude` repository. It is currently in its initial setup phase with no application code yet.
+Node.js/Express web application with session-based authentication. Uses `express-session` for session management and `bcryptjs` for password hashing.
 
-## Repository Structure
+## Commands
 
-- The default branch is `main`.
-- The repository is hosted on GitHub at `georgiaked4-tech/cloude`.
+- `npm start` — Run the server (default port 3000)
+- `npm test` — Run tests
+
+## Architecture
+
+- `app.js` — Main Express app. Defines auth routes (`/api/register`, `/api/login`, `/api/logout`, `/api/me`), session config, and `requireAuth` middleware. Exports the app for testing.
+- In-memory user store (Map) — intended to be replaced with a database.
+
+## Repository
+
+- Default branch: `main`
+- Hosted at `georgiaked4-tech/cloude`
