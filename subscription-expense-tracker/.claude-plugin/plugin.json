@@ -1,0 +1,8 @@
+{
+  "name": "subscription-expense-tracker",
+  "version": "0.1.0",
+  "description": "Track and analyze monthly subscription expenses by scanning your email inbox for payment receipts, invoices, and renewal notices. Generates a visual monthly dashboard of all recurring costs.",
+  "author": {
+    "name": "Anthropic FSI"
+  }
+}
