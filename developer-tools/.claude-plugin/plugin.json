@@ -1,0 +1,8 @@
+{
+  "name": "developer-tools",
+  "version": "1.0.0",
+  "description": "General-purpose developer productivity tools from softaworks/agent-toolkit: diagrams, git workflows, documentation, QA, communication, and more.",
+  "author": {
+    "name": "softaworks"
+  }
+}

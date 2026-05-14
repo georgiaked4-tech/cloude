@@ -43,6 +43,11 @@
       "name": "claude-in-office",
       "source": "./claude-in-office",
       "description": "Provision direct cloud access (Vertex AI, Bedrock, or LLM gateway) for the Claude Office add-in. Generates the customized manifest, walks through Azure admin consent, and writes per-user config via Graph extension attributes."
+    },
+    {
+      "name": "developer-tools",
+      "source": "./developer-tools",
+      "description": "General-purpose developer productivity tools from softaworks/agent-toolkit: diagrams, git workflows, documentation, QA, communication, and more."
     }
   ]
 }
