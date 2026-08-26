@@ -35,8 +35,9 @@ Start with **financial analysis** — the core plugin that provides shared model
 | **[equity research](./equity-research)** | Add-on | Write earnings updates and initiating coverage reports. Maintain investment theses, track catalysts, draft morning notes, and screen for new ideas. | — |
 | **[private equity](./private-equity)** | Add-on | Source and screen deals, run due diligence checklists, analyze unit economics and returns, draft IC memos, and monitor portfolio company KPIs. | — |
 | **[wealth management](./wealth-management)** | Add-on | Prep for client meetings, build financial plans, rebalance portfolios, generate client reports, and identify tax-loss harvesting opportunities. | — |
+| **[economic indicators](./economic-indicators)** | Add-on | Normalize economic calendars into usable data, score releases against consensus, draft week-ahead macro notes, track central bank decisions, and build country macro profiles. | — |
 
-**41 skills, 38 commands, 11 MCP integrations**
+**50 skills, 45 commands, 11 MCP integrations**
 
 Install these directly from Cowork, browse the full collection here on GitHub, or build your own.
 
@@ -82,6 +83,7 @@ claude plugin install investment-banking@financial-services-plugins
 claude plugin install equity-research@financial-services-plugins
 claude plugin install private-equity@financial-services-plugins
 claude plugin install wealth-management@financial-services-plugins
+claude plugin install economic-indicators@financial-services-plugins
 ```
 
 Once installed, plugins activate automatically. Skills fire when relevant, and slash commands are available in your session:
@@ -94,6 +96,8 @@ Once installed, plugins activate automatically. Skills fire when relevant, and s
 /ic-memo [project name]         # Investment committee memo
 /source [criteria]              # Deal sourcing
 /client-review [client]         # Client meeting prep
+/calendar [countries]           # Economic calendar, parsed and filtered
+/week-ahead [audience]          # Week-ahead macro note
 ```
 
 ## How Plugins Work
