@@ -30,6 +30,11 @@
       "description": "Wealth management and financial advisory tools: client reviews, financial planning, portfolio analysis, and client reporting"
     },
     {
+      "name": "economic-indicators",
+      "source": "./economic-indicators",
+      "description": "Macro calendar and economic indicator tools: normalize economic calendars, score data surprises against consensus, prep week-ahead macro briefs, track central bank decisions, and build country macro profiles"
+    },
+    {
       "name": "lseg",
       "source": "./partner-built/lseg",
       "description": "Price bonds, analyze yield curves, evaluate FX carry trades, value options, and build macro dashboards using LSEG financial data and analytics."

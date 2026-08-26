@@ -1,0 +1,8 @@
+{
+  "name": "economic-indicators",
+  "version": "0.1.0",
+  "description": "Macro calendar and economic indicator tools: normalize economic calendars, score data surprises against consensus, prep week-ahead macro briefs, track central bank decisions, and build country macro profiles",
+  "author": {
+    "name": "Anthropic FSI"
+  }
+}
