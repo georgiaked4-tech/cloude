@@ -502,6 +502,43 @@ details.data td{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
   padding-top:18px;
   max-width:70ch;
 }
+/* ---------- print / PDF ---------- */
+@media print{
+  :root{
+    --paper:#FFFFFF;
+    --paper-2:#FAFBF7;
+    --paper-3:#F0F2EA;
+    --ink:#141810;
+    --ink-2:#3C4338;
+    --ink-3:#666E60;
+    --rule:#C3C8B9;
+    --rule-soft:#DCE0D4;
+    --shadow:rgba(0,0,0,.06);
+  }
+  @page{size:A4;margin:16mm 15mm 18mm}
+  body{font-size:10.5pt;line-height:1.5;background:#fff}
+  .page{max-width:none;padding:0}
+  .screen-only{display:none}
+  details.data{display:none}
+  .mast{padding-top:0;margin-bottom:34px;break-after:avoid}
+  h1{font-size:52pt;line-height:1.06}
+  .standfirst{font-size:11.5pt}
+  section{padding-bottom:30px;break-inside:auto}
+  .shead{break-after:avoid;break-inside:avoid;margin-bottom:18px}
+  .shead h2{font-size:19pt}
+  h3{break-after:avoid;margin-top:22px}
+  .pull{margin:26px auto;font-size:16pt;break-inside:avoid}
+  .bleed{margin:20px 0;break-inside:avoid}
+  .kicker{break-after:avoid}
+  .chart-card,.case,.rr,.checks,.rules,.tablewrap,.stack,figure{break-inside:avoid}
+  figure{break-before:auto}
+  .tier{break-inside:avoid}
+  .fig .n{font-size:22pt}
+  .rr .v{font-size:19pt}
+  .close{break-inside:avoid}
+  .disclaimer{break-inside:avoid;font-size:8.5pt}
+  a{text-decoration:none}
+}
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
 }
@@ -590,7 +627,7 @@ details.data td{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
           <div class="tt" id="tt" role="status" aria-live="off"></div>
         </div>
       </div>
-      <figcaption>Реконструкция кривой по цифрам автора: месяц закрыт на +$165&nbsp;000, из них $100&nbsp;000 сделаны в последние десять дней, один день принес +$90&nbsp;000. Между пиком на 4-й день и минимумом на 11-й — просадка на $50&nbsp;000. Наведите курсор, чтобы увидеть дневной результат.</figcaption>
+      <figcaption>Реконструкция кривой по цифрам автора: месяц закрыт на +$165&nbsp;000, из них $100&nbsp;000 сделаны в последние десять дней, один день принес +$90&nbsp;000. Между пиком на 4-й день и минимумом на 11-й — просадка на $50&nbsp;000. <span class="screen-only">Наведите курсор, чтобы увидеть дневной результат.</span></figcaption>
       <details class="data">
         <summary>Данные таблицей</summary>
         <div class="tablewrap"><table id="datatable"><thead><tr><th scope="col">День</th><th scope="col">За день</th><th scope="col">Нарастающим итогом</th></tr></thead><tbody></tbody></table></div>
@@ -672,7 +709,7 @@ details.data td{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
       <div>
         <span class="k">Рабочее R:R</span>
         <span class="v">3 : 1</span>
-        <p class="note">Стоп $1 000 против тейка $3 000 — серия убытков перестает быть смертельной.</p>
+        <p class="note">Стоп $1&nbsp;000 против тейка $3&nbsp;000 — серия убытков перестает быть смертельной.</p>
       </div>
       <div>
         <span class="k">Идеальный сетап</span>
