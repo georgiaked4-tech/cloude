@@ -1,0 +1,857 @@
+<title>Трейдинг против найма</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --paper:#EBECE6;
+  --paper-2:#F5F6F1;
+  --paper-3:#E0E2D9;
+  --ink:#161A15;
+  --ink-2:#454C42;
+  --ink-3:#6F776A;
+  --rule:#CACEC0;
+  --rule-soft:#D9DCD2;
+  --gain:#1E6A4C;
+  --gain-soft:rgba(30,106,76,.13);
+  --loss:#9C3A2E;
+  --loss-soft:rgba(156,58,46,.12);
+  --brass:#8A6A22;
+  --shadow:rgba(22,26,21,.09);
+
+  --f-display:"Oswald","Arial Narrow",Impact,sans-serif;
+  --f-body:"Literata",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono","SF Mono",Consolas,monospace;
+
+  --measure:66ch;
+  --page:1080px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#12140F;
+    --paper-2:#1A1D16;
+    --paper-3:#0C0E09;
+    --ink:#E8EADF;
+    --ink-2:#B5BAAB;
+    --ink-3:#868D7D;
+    --rule:#2C3027;
+    --rule-soft:#23261E;
+    --gain:#55AE81;
+    --gain-soft:rgba(85,174,129,.15);
+    --loss:#D4735F;
+    --loss-soft:rgba(212,115,95,.14);
+    --brass:#C6A052;
+    --shadow:rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12140F;
+  --paper-2:#1A1D16;
+  --paper-3:#0C0E09;
+  --ink:#E8EADF;
+  --ink-2:#B5BAAB;
+  --ink-3:#868D7D;
+  --rule:#2C3027;
+  --rule-soft:#23261E;
+  --gain:#55AE81;
+  --gain-soft:rgba(85,174,129,.15);
+  --loss:#D4735F;
+  --loss-soft:rgba(212,115,95,.14);
+  --brass:#C6A052;
+  --shadow:rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.page{
+  max-width:var(--page);
+  margin-inline:auto;
+  padding:0 24px 96px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.col{max-width:var(--measure);margin-inline:auto;width:100%}
+p{margin:0 0 1.05em}
+p:last-child{margin-bottom:0}
+strong{font-weight:700}
+em{font-style:italic}
+a{color:var(--gain)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+/* ---------- masthead ---------- */
+.mast{
+  border-bottom:1px solid var(--rule);
+  padding:40px 0 26px;
+  margin-bottom:64px;
+}
+.tape{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 22px;
+  margin-bottom:34px;
+}
+.tape span{white-space:nowrap}
+.tape b{font-weight:500;color:var(--ink-2)}
+.tape .up{color:var(--gain)}
+.tape .down{color:var(--loss)}
+
+h1{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-size:clamp(42px,8.4vw,96px);
+  line-height:1.09;
+  letter-spacing:-.005em;
+  text-transform:uppercase;
+  text-wrap:balance;
+  margin:0 0 22px;
+  max-width:14ch;
+}
+h1 .vs{
+  display:block;
+  font-weight:400;
+  font-size:.42em;
+  letter-spacing:.24em;
+  color:var(--loss);
+  margin:.16em 0 .04em;
+}
+.standfirst{
+  max-width:56ch;
+  font-size:clamp(17px,2.1vw,20px);
+  color:var(--ink-2);
+  line-height:1.55;
+  margin-bottom:24px;
+}
+.byline{
+  font-family:var(--f-mono);
+  font-size:11.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  border-top:1px solid var(--rule-soft);
+  padding-top:14px;
+  max-width:74ch;
+}
+
+/* ---------- sections ---------- */
+section{padding:0 0 72px}
+.shead{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:baseline;
+  gap:16px;
+  margin-bottom:30px;
+  padding-bottom:14px;
+  border-bottom:2px solid var(--ink);
+}
+.shead .idx{
+  font-family:var(--f-mono);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.1em;
+  color:var(--loss);
+}
+.shead h2{
+  font-family:var(--f-display);
+  font-weight:600;
+  text-transform:uppercase;
+  font-size:clamp(23px,3.4vw,33px);
+  line-height:1.06;
+  letter-spacing:.005em;
+  margin:0;
+  text-wrap:balance;
+}
+h3{
+  font-family:var(--f-display);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  font-size:17px;
+  margin:38px 0 14px;
+  color:var(--ink);
+}
+.kicker{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-bottom:12px;
+}
+
+/* ---------- pull quote ---------- */
+.pull{
+  font-family:var(--f-display);
+  font-weight:400;
+  text-transform:uppercase;
+  font-size:clamp(21px,3.6vw,31px);
+  line-height:1.16;
+  letter-spacing:.01em;
+  color:var(--ink);
+  border-left:3px solid var(--loss);
+  padding:4px 0 4px 22px;
+  margin:44px auto;
+  max-width:var(--measure);
+  text-wrap:balance;
+}
+
+/* ---------- ledger table ---------- */
+.bleed{width:100%;margin:34px 0}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);background:var(--paper-2)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:15.5px}
+thead th{
+  font-family:var(--f-mono);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  text-align:left;
+  padding:14px 20px;
+  border-bottom:1px solid var(--rule);
+  color:var(--ink-3);
+  background:var(--paper-3);
+}
+thead th.c-hire{color:var(--ink-2)}
+thead th.c-trade{color:var(--gain)}
+tbody th{
+  font-family:var(--f-mono);
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  text-align:left;
+  color:var(--ink-3);
+  padding:16px 20px;
+  vertical-align:top;
+  width:26%;
+}
+tbody td{padding:16px 20px;vertical-align:top;border-left:1px solid var(--rule-soft)}
+tbody tr+tr th,tbody tr+tr td{border-top:1px solid var(--rule-soft)}
+tbody td.trade{color:var(--ink);font-weight:500}
+tbody td.hire{color:var(--ink-2)}
+
+/* ---------- chart ---------- */
+figure{margin:0}
+.chart-card{
+  border:1px solid var(--rule);
+  background:var(--paper-2);
+  padding:24px 20px 18px;
+}
+.chart-head{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px 28px;
+  margin-bottom:18px;
+}
+.chart-title{
+  font-family:var(--f-display);
+  text-transform:uppercase;
+  font-weight:600;
+  letter-spacing:.04em;
+  font-size:16px;
+  margin:0;
+}
+.chart-sub{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-top:6px;
+}
+.hero-figs{display:flex;gap:26px;flex-wrap:wrap}
+.fig .n{
+  font-family:var(--f-display);
+  font-size:30px;
+  font-weight:600;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  display:block;
+}
+.fig .n.gain{color:var(--gain)}
+.fig .n.loss{color:var(--loss)}
+.fig .l{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-top:7px;
+  display:block;
+  max-width:20ch;
+}
+.plot{position:relative}
+.plot svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.tt{
+  position:absolute;
+  pointer-events:none;
+  background:var(--paper);
+  border:1px solid var(--rule);
+  box-shadow:0 6px 18px var(--shadow);
+  padding:9px 12px;
+  font-family:var(--f-mono);
+  font-size:11.5px;
+  line-height:1.5;
+  color:var(--ink);
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity .12s ease;
+  z-index:3;
+}
+.tt.on{opacity:1}
+.tt .d{color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;font-size:10px}
+.tt .v{font-variant-numeric:tabular-nums;font-weight:500}
+figcaption{
+  font-family:var(--f-mono);
+  font-size:11px;
+  line-height:1.6;
+  letter-spacing:.03em;
+  color:var(--ink-3);
+  margin-top:14px;
+  max-width:96ch;
+}
+details.data{margin-top:12px}
+details.data summary{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  cursor:pointer;
+}
+details.data .tablewrap{margin-top:12px;background:var(--paper)}
+details.data table{min-width:420px;font-size:13px}
+details.data td{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* ---------- pyramid ---------- */
+.stack{display:flex;flex-direction:column;gap:10px;align-items:center}
+.tier{
+  width:100%;
+  border:1px solid var(--rule);
+  background:var(--paper-2);
+  padding:16px 20px;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:6px 16px;
+  align-items:baseline;
+}
+.tier[data-w="2"]{width:88%}
+.tier[data-w="3"]{width:76%}
+.tier[data-w="4"]{width:64%;border-color:var(--gain);background:var(--gain-soft)}
+.tier .lvl{
+  font-family:var(--f-mono);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.1em;
+  color:var(--ink-3);
+}
+.tier h4{
+  font-family:var(--f-display);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  font-weight:600;
+  font-size:15px;
+  margin:0;
+}
+.tier p{
+  grid-column:2;
+  margin:0;
+  max-width:80ch;
+  font-size:14.5px;
+  line-height:1.5;
+  color:var(--ink-2);
+}
+@media (max-width:640px){
+  .tier,.tier[data-w="2"],.tier[data-w="3"],.tier[data-w="4"]{width:100%}
+}
+.funnel-note{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  text-align:center;
+  margin-top:14px;
+}
+
+/* ---------- math strip ---------- */
+.rr{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+}
+.rr div{background:var(--paper-2);padding:20px}
+.rr .k{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  display:block;
+  margin-bottom:10px;
+}
+.rr .v{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:27px;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  display:block;
+}
+.rr .note{font-size:13.5px;color:var(--ink-2);margin-top:9px;line-height:1.45}
+
+/* ---------- checklist ---------- */
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.checks li{background:var(--paper-2);padding:16px 20px;display:grid;grid-template-columns:22px 1fr;gap:14px;align-items:start}
+.checks .box{
+  width:15px;height:15px;
+  border:1.5px solid var(--loss);
+  margin-top:5px;
+}
+.checks .term{
+  font-family:var(--f-mono);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--loss);
+  display:block;
+  margin-bottom:4px;
+}
+.checks .txt{font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ---------- case ---------- */
+.case{
+  border:1px solid var(--loss);
+  background:var(--loss-soft);
+  padding:24px 24px 20px;
+}
+.case .kicker{color:var(--loss)}
+.case p{font-size:15.5px;color:var(--ink-2);max-width:74ch}
+.case .arc{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px 14px;
+  font-family:var(--f-mono);
+  font-size:13px;
+  font-variant-numeric:tabular-nums;
+  margin-bottom:16px;
+}
+.case .arc b{font-weight:700;font-size:18px;color:var(--ink)}
+.case .arc .zero{color:var(--loss)}
+.case .arc .arw{color:var(--ink-3)}
+
+/* ---------- rules ---------- */
+.rules{list-style:none;margin:0;padding:0;counter-reset:r;display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.rules li{background:var(--paper-2);padding:18px 20px;counter-increment:r;display:grid;grid-template-columns:auto 1fr;gap:16px}
+.rules li::before{
+  content:"R" counter(r);
+  font-family:var(--f-mono);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:var(--gain);
+  padding-top:3px;
+}
+.rules b{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.05em;font-size:15px;font-weight:600;display:block;margin-bottom:4px}
+.rules span{font-size:15.5px;color:var(--ink-2);line-height:1.5}
+
+/* ---------- close ---------- */
+.close{
+  border-top:2px solid var(--ink);
+  padding-top:34px;
+  margin-top:14px;
+}
+.close .last{
+  font-family:var(--f-display);
+  text-transform:uppercase;
+  font-weight:600;
+  font-size:clamp(20px,3.2vw,28px);
+  line-height:1.14;
+  letter-spacing:.01em;
+  text-wrap:balance;
+  margin-top:26px;
+}
+.disclaimer{
+  font-family:var(--f-mono);
+  font-size:11px;
+  line-height:1.65;
+  letter-spacing:.03em;
+  color:var(--ink-3);
+  border-top:1px solid var(--rule);
+  margin-top:44px;
+  padding-top:18px;
+  max-width:70ch;
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <div class="tape" aria-hidden="true">
+      <span><b>МЕС.</b> <em class="up">+$165 000</em></span>
+      <span><b>ЛУЧШИЙ ДЕНЬ</b> <em class="up">+$90 000</em></span>
+      <span><b>ПРОСАДКА</b> <em class="down">−$50 000</em></span>
+      <span><b>WIN RATE</b> 35–65%</span>
+      <span><b>РИСК/СДЕЛКА</b> 2–3%</span>
+    </div>
+    <h1>Трейдинг<span class="vs">против</span>найма</h1>
+    <p class="standfirst">Найм платит за отработанные часы. Рынок не платит за процесс — он платит
+      за результат и за дисциплинированное ожидание вероятности. Разбор того, чем один способ
+      зарабатывать отличается от другого, и что нужно, чтобы дожить до дней, которые делают год.</p>
+    <p class="byline">Разбор подхода · 7 разделов · Цифры и кейсы — со слов автора</p>
+  </header>
+
+  <section id="s1">
+    <div class="col">
+      <div class="shead"><span class="idx">§ 01</span><h2>Ловушка заводского мышления</h2></div>
+      <p>Большинство новичков приходят на рынок с ожиданием, что мир им что-то должен. Они пытаются
+        притащить в трейдинг логику наемного рабочего: «я отсидел за монитором восемь часов — где
+        моя зарплата?». Рынку безразличны ваши старания, ваша усталость и то, сколько часов вы
+        смотрели в график. В этой индустрии нет оплаты за процесс.</p>
+      <p>Если вы привыкли, что время жизни линейно конвертируется в деньги — забудьте об этом. Вы
+        можете работать пятнадцать часов и закончить день с убытком. Это бизнес, а не заводская
+        смена.</p>
+    </div>
+
+    <div class="bleed">
+      <div class="kicker col">Две модели дохода</div>
+      <div class="tablewrap">
+        <table>
+          <caption class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Сравнение наемного труда и трейдинга по четырем критериям</caption>
+          <thead>
+            <tr>
+              <th scope="col">Критерий</th>
+              <th scope="col" class="c-hire">Наемный труд</th>
+              <th scope="col" class="c-trade">Трейдинг</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Гарантии</th><td class="hire">Стабильная зарплата</td><td class="trade">Риск потери капитала</td></tr>
+            <tr><th scope="row">Время → деньги</th><td class="hire">Прямая зависимость</td><td class="trade">Корреляции нет вообще</td></tr>
+            <tr><th scope="row">Потолок прибыли</th><td class="hire">Ограничен штатным расписанием</td><td class="trade">Не ограничен — зависит от объема</td></tr>
+            <tr><th scope="row">Ответственность</th><td class="hire">Можно переложить на руководителя</td><td class="trade">Абсолютная и единоличная</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="col">Если вы не готовы взять на себя ответственность за каждый клик мышкой — оставайтесь
+      в найме. Там безопаснее, и это нормальный выбор.</p>
+  </section>
+
+  <p class="pull">Профессиональный трейдинг — это на 90% ожидание и на 10% исполнение.</p>
+
+  <section id="s2">
+    <div class="col">
+      <div class="shead"><span class="idx">§ 02</span><h2>Природа дохода: ожидание против реальности</h2></div>
+      <p>Большинство людей сгорает не на убытках, а на затишье. Доход в трейдинге приходит не
+        равномерным ручейком, а рывками — и почти весь результат месяца делается в считанные дни,
+        которые невозможно предсказать заранее. Единственный способ их поймать — быть в игре, когда
+        они наступят.</p>
+    </div>
+
+    <figure class="bleed">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <h3 class="chart-title" style="margin:0">Накопленный P&amp;L за месяц</h3>
+            <div class="chart-sub">30 дней · нарастающим итогом · $ тыс.</div>
+          </div>
+          <div class="hero-figs">
+            <div class="fig"><span class="n gain">+$165k</span><span class="l">итог месяца</span></div>
+            <div class="fig"><span class="n gain">+$100k</span><span class="l">из них за последние 10 дней</span></div>
+            <div class="fig"><span class="n loss">−$50k</span><span class="l">просадка от пика</span></div>
+          </div>
+        </div>
+        <div class="plot" id="plot">
+          <div class="tt" id="tt" role="status" aria-live="off"></div>
+        </div>
+      </div>
+      <figcaption>Реконструкция кривой по цифрам автора: месяц закрыт на +$165&nbsp;000, из них $100&nbsp;000 сделаны в последние десять дней, один день принес +$90&nbsp;000. Между пиком на 4-й день и минимумом на 11-й — просадка на $50&nbsp;000. Наведите курсор, чтобы увидеть дневной результат.</figcaption>
+      <details class="data">
+        <summary>Данные таблицей</summary>
+        <div class="tablewrap"><table id="datatable"><thead><tr><th scope="col">День</th><th scope="col">За день</th><th scope="col">Нарастающим итогом</th></tr></thead><tbody></tbody></table></div>
+      </details>
+    </figure>
+
+    <div class="col">
+      <p>Это похоже на «Монополию»: можно несколько кругов просто ходить по полю, теряя мелкие суммы
+        на аренде, — задача в том, чтобы остаться в игре достаточно долго и в один момент смести всё
+        поле.</p>
+      <h3>Типичный цикл</h3>
+      <p><strong>Три недели «грязи».</strong> Сделки в безубыток, системные стопы, рынок не дает
+        структуры. Вы просто выживаете.</p>
+      <p><strong>Просадка.</strong> Психологическая проверка: серия мелких минусов, суммарно
+        на −$50 000. Здесь ломается большинство.</p>
+      <p><strong>Кульминация.</strong> Один-два дня, когда макро, фундамент и техника сходятся. Одна
+        сделка по нефти или эфиру приносит +$90 000 и формирует результат года.</p>
+      <p>Чтобы дожить до этих дней, нужен фундамент анализа, а не интуиция гадалки.</p>
+    </div>
+  </section>
+
+  <section id="s3">
+    <div class="col">
+      <div class="shead"><span class="idx">§ 03</span><h2>Пирамида анализа: сверху вниз</h2></div>
+      <p>Профессионал не ищет секретный индикатор. Он идет от глобального контекста к конкретной
+        точке входа, и каждый следующий уровень отсекает часть сделок. Техника стоит последней —
+        не потому, что она не важна, а потому, что без первых трех уровней она показывает вам
+        фигуры, а не причины.</p>
+    </div>
+
+    <div class="bleed">
+      <div class="stack">
+        <div class="tier" data-w="1">
+          <span class="lvl">L1</span><h4>Макро — глобальный контекст</h4>
+          <p>Инфляция, PCE, решения ФРС. Почему нефть стоит $83, а не $120 при эскалации вокруг
+            Ирана? Потому что Китай вдвое сократил импорт — минус 5 млн баррелей. Без этой детали
+            вы лонгуете нефть и не понимаете, почему она падает. Интервенция Японии на 163 иенах —
+            то же самое: не видя совместной работы ФРС и Банка Японии, вы не возьмете этот шорт.</p>
+        </div>
+        <div class="tier" data-w="2">
+          <span class="lvl">L2</span><h4>Фундаментал актива</h4>
+          <p>Оценка конкретного инструмента. Это ваша осведомленность — то, что помогает отличить
+            истинный пробой от ложного.</p>
+        </div>
+        <div class="tier" data-w="3">
+          <span class="lvl">L3</span><h4>On-chain: куда идут крупные</h4>
+          <p>Наблюдение за крупными кошельками и маркетмейкерами. Если они хеджируются в шорт,
+            ваши лонги — корм для них.</p>
+        </div>
+        <div class="tier" data-w="4">
+          <span class="lvl">L4</span><h4>Техника — последний фильтр</h4>
+          <p><strong>BPR</strong> — зоны сбалансированной цены для поиска истинных разворотов.
+            <strong>Quarterly Theory</strong> — циклы внутри дня, недели, месяца: время важнее цены.
+            <strong>SMT</strong> — дивергенция коррелирующих активов: BTC летит, ETH стоит — значит,
+            ликвидность утекает.</p>
+        </div>
+      </div>
+      <p class="funnel-note">↓ каждый уровень отсекает сделки — на выходе остаются немногие</p>
+    </div>
+
+    <p class="col">Эти уровни нужны не для предсказания будущего. Они нужны, чтобы перестать брать
+      плохие сделки.</p>
+  </section>
+
+  <section id="s4">
+    <div class="col">
+      <div class="shead"><span class="idx">§ 04</span><h2>Математика важнее интуиции</h2></div>
+      <p>Не нужно быть гением — нужно уметь считать. Профессиональный процент прибыльных сделок
+        держится в диапазоне 35–65%. То есть можно ошибаться в половине случаев и все равно
+        зарабатывать, если каждая правильная сделка кратно перекрывает неправильную.</p>
+    </div>
+
+    <div class="bleed rr">
+      <div>
+        <span class="k">Win rate профи</span>
+        <span class="v">35–65%</span>
+        <p class="note">Половина сделок может быть убыточной. Это норма, а не диагноз.</p>
+      </div>
+      <div>
+        <span class="k">Рабочее R:R</span>
+        <span class="v">3 : 1</span>
+        <p class="note">Стоп $1 000 против тейка $3 000 — серия убытков перестает быть смертельной.</p>
+      </div>
+      <div>
+        <span class="k">Идеальный сетап</span>
+        <span class="v" style="color:var(--gain)">10 : 1</span>
+        <p class="note">Один выстрел перекрывает серию средних минусов — это и есть «жирный» день.</p>
+      </div>
+    </div>
+
+    <p class="col">Когда математика на вашей стороне, страх исчезает. Но на его место приходит эго —
+      и оно опаснее.</p>
+  </section>
+
+  <section id="s5">
+    <div class="col">
+      <div class="shead"><span class="idx">§ 05</span><h2>Синдром Кинг-Конга</h2></div>
+      <p>Самый опасный момент — не когда вы теряете, а когда начинаете чувствовать себя
+        непобедимым. Это переход от системного трейдера к азартному игроку, и происходит он
+        всегда после серии побед.</p>
+    </div>
+
+    <div class="bleed case">
+      <div class="kicker">Кейс · Джеймс Уинн</div>
+      <div class="arc">
+        <b>$3 млн</b><span class="arw">→</span><b>$100 млн</b><span class="arw">за 3 месяца →</span><b class="zero">$0</b><span class="arw">за 2 недели</span>
+      </div>
+      <p>Поднял с нуля $3 млн на споте PEPE, разогнал их до $100 млн за три месяца и открыл позицию
+        по биткоину на $1 млрд. Он поверил, что он — король рынка. Потерял всё до цента за две
+        недели. Рынок наказывает за гордыню мгновенно.</p>
+    </div>
+
+    <div class="bleed">
+      <div class="kicker col">Признаки токсичного мышления</div>
+      <ul class="checks">
+        <li><span class="box" aria-hidden="true"></span><span><span class="term">Revenge trading</span><span class="txt">Желание отыграться у рынка сразу после убытка.</span></span></li>
+        <li><span class="box" aria-hidden="true"></span><span><span class="term">Overleveraging</span><span class="txt">Завышение риска, потому что «я уверен в этой сделке на 100%».</span></span></li>
+        <li><span class="box" aria-hidden="true"></span><span><span class="term">Hero syndrome</span><span class="txt">Вера в то, что вы понимаете рынок лучше алгоритмов маркетмейкеров.</span></span></li>
+        <li><span class="box" aria-hidden="true"></span><span><span class="term">Игнорирование стопов</span><span class="txt">Надежда, что цена развернется. Надежда — это путь к ликвидации.</span></span></li>
+      </ul>
+    </div>
+
+    <p class="col">Чувствуете себя героем — закрывайте терминал и идите гулять. Вы в шаге от обрыва.</p>
+  </section>
+
+  <section id="s6">
+    <div class="col">
+      <div class="shead"><span class="idx">§ 06</span><h2>Правила выживания капитала</h2></div>
+      <p>Калькулятор позиции — более важный инструмент, чем график. Без него вы не трейдер, а игрок.
+        Правила ниже не делают вас прибыльным; они делают вас живым достаточно долго, чтобы
+        прибыльность успела проявиться.</p>
+    </div>
+
+    <ol class="bleed rules">
+      <li><span><b>Риск на сделку: 2–3%</b><span>Максимум 5% — и только в исключительных случаях,
+        которые вы можете назвать вслух заранее.</span></span></li>
+      <li><span><b>Первый тейк — стоп в безубыток</b><span>Немедленно, без обсуждения с самим собой.
+        Сделка, которая уже принесла деньги, не должна забрать их обратно.</span></span></li>
+      <li><span><b>Никакого читинга с лимитами</b><span>Вывели деньги и завели снова, чтобы обойти
+        собственные ограничения? Вы обманываете не систему — вы обманываете свое будущее.</span></span></li>
+    </ol>
+
+    <p class="col">Дисциплина — единственная стена между вашим депозитом и обнулением.</p>
+  </section>
+
+  <section id="s7">
+    <div class="col">
+      <div class="shead"><span class="idx">§ 07</span><h2>Свобода через ответственность</h2></div>
+      <p>Трейдинг дает деньги, время и отсутствие начальников. Цена этой свободы — абсолютная
+        ответственность. Здесь нет виноватых и нет «плохого рынка». Есть только ваши решения и ваша
+        способность следовать системе.</p>
+      <p>Перестаньте искать гарантии. Перестаньте смотреть на цифры в моменте. Смотрите на мастерство,
+        на макро, на то, куда течет ликвидность. Капитал следует за мастерством — и никогда не
+        задерживается у тех, кто лишен холодного разума.</p>
+      <div class="close">
+        <p class="last">Оставайтесь в живых, соблюдайте риск и торгуйте как профессионал.</p>
+      </div>
+      <p class="disclaimer">Все суммы, кейсы и статистика приведены со слов автора как иллюстрация
+        подхода к работе и не являются подтвержденными данными. Материал носит образовательный
+        характер, не является инвестиционной рекомендацией и не обещает доходности. Торговля с
+        плечом сопряжена с риском потери всего капитала.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  // Накопленный P&L, $ тыс., 30 дней
+  var cum = [6,14,22,30,24,18,9,2,-8,-14,-20,-12,-6,2,10,18,30,42,54,65,60,52,58,66,60,55,145,152,158,165];
+  var W = 900, H = 380, ML = 58, MR = 24, MT = 26, MB = 40;
+  var iw = W - ML - MR, ih = H - MT - MB;
+  var yMin = -40, yMax = 180;
+  var x = function(i){ return ML + (i/(cum.length-1))*iw; };
+  var y = function(v){ return MT + (1-(v-yMin)/(yMax-yMin))*ih; };
+  var fmt = function(v){ return (v>0?'+':v<0?'−':'') + '$' + Math.abs(v) + 'k'; };
+
+  var ticks = [-40,0,60,120,180];
+  var grid = ticks.map(function(t){
+    return '<line x1="'+ML+'" x2="'+(W-MR)+'" y1="'+y(t).toFixed(1)+'" y2="'+y(t).toFixed(1)+'" stroke="'+(t===0?'var(--ink-3)':'var(--rule)')+'" stroke-width="1"'+(t===0?'':' stroke-dasharray="2 4"')+'/>'
+      + '<text x="'+(ML-10)+'" y="'+(y(t)+4).toFixed(1)+'" text-anchor="end" class="ax">'+(t>0?'+'+t:t<0?'\u2212'+Math.abs(t):t)+'</text>';
+  }).join('');
+
+  var xlabels = [0,4,9,14,19,24,29].map(function(i){
+    return '<text x="'+x(i).toFixed(1)+'" y="'+(H-14)+'" text-anchor="middle" class="ax">'+(i+1)+'</text>';
+  }).join('');
+
+  var line = cum.map(function(v,i){ return (i?'L':'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); }).join(' ');
+  var area = line + ' L' + x(cum.length-1).toFixed(1) + ' ' + y(0).toFixed(1) + ' L' + x(0).toFixed(1) + ' ' + y(0).toFixed(1) + ' Z';
+
+  // последние 10 дней
+  var bandX = x(20), bandW = x(29) - x(20);
+  // просадка: пик д4 (индекс 3) → минимум д11 (индекс 10)
+  var pk = 3, tr = 10;
+
+  var svg = ''
+    + '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Кривая накопленного P&amp;L за 30 дней: просадка 50 тысяч долларов от пика на четвертый день до минимума на одиннадцатый, затем рост и скачок на 90 тысяч на двадцать седьмой день, итог месяца плюс 165 тысяч">'
+    + '<style>.ax{font-family:var(--f-mono);font-size:11px;fill:var(--ink-3)}'
+    + '.an{font-family:var(--f-mono);font-size:11.5px;font-weight:500}'
+    + '.an-l{fill:var(--loss)}.an-g{fill:var(--gain)}.an-m{fill:var(--ink-3);font-weight:400}</style>'
+    + '<rect x="'+bandX.toFixed(1)+'" y="'+MT+'" width="'+bandW.toFixed(1)+'" height="'+ih+'" fill="var(--gain-soft)"/>'
+    + '<text x="'+(bandX+8).toFixed(1)+'" y="'+(MT+16)+'" class="an an-g">+$100k за 10 дней</text>'
+    + grid + xlabels
+    + '<clipPath id="clipUp"><rect x="'+ML+'" y="'+MT+'" width="'+iw+'" height="'+(y(0)-MT).toFixed(1)+'"/></clipPath>'
+    + '<clipPath id="clipDn"><rect x="'+ML+'" y="'+y(0).toFixed(1)+'" width="'+iw+'" height="'+(MT+ih-y(0)).toFixed(1)+'"/></clipPath>'
+    + '<path d="'+area+'" fill="var(--gain-soft)" clip-path="url(#clipUp)"/>'
+    + '<path d="'+area+'" fill="var(--loss-soft)" clip-path="url(#clipDn)"/>'
+    + '<path d="'+line+'" fill="none" stroke="var(--gain)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
+    // просадка
+    + '<line x1="'+x(pk).toFixed(1)+'" x2="'+x(pk).toFixed(1)+'" y1="'+y(cum[pk]).toFixed(1)+'" y2="'+y(cum[tr]).toFixed(1)+'" stroke="var(--loss)" stroke-width="1.5" stroke-dasharray="3 3"/>'
+    + '<line x1="'+x(pk).toFixed(1)+'" x2="'+x(tr).toFixed(1)+'" y1="'+y(cum[tr]).toFixed(1)+'" y2="'+y(cum[tr]).toFixed(1)+'" stroke="var(--loss)" stroke-width="1.5" stroke-dasharray="3 3"/>'
+    + '<text x="'+(x(pk)+8).toFixed(1)+'" y="'+(y(cum[tr])+18).toFixed(1)+'" class="an an-l">−$50k просадка</text>'
+    + '<circle cx="'+x(tr).toFixed(1)+'" cy="'+y(cum[tr]).toFixed(1)+'" r="4" fill="var(--paper-2)" stroke="var(--loss)" stroke-width="2"/>'
+    // день +90k
+    + '<circle cx="'+x(26).toFixed(1)+'" cy="'+y(cum[26]).toFixed(1)+'" r="4.5" fill="var(--paper-2)" stroke="var(--gain)" stroke-width="2"/>'
+    + '<text x="'+(x(26)-10).toFixed(1)+'" y="'+(y(cum[26])-12).toFixed(1)+'" text-anchor="end" class="an an-g">один день: +$90k</text>'
+    // финал
+    + '<circle cx="'+x(29).toFixed(1)+'" cy="'+y(cum[29]).toFixed(1)+'" r="5" fill="var(--gain)"/>'
+    + '<text x="'+(W-MR).toFixed(1)+'" y="'+(y(cum[29])-14).toFixed(1)+'" text-anchor="end" class="an an-g">+$165k</text>'
+    + '<text x="'+(ML-10)+'" y="'+(H-14)+'" text-anchor="end" class="ax">день</text>'
+    + '<g id="hover"></g>'
+    + '<rect id="hit" x="'+ML+'" y="'+MT+'" width="'+iw+'" height="'+ih+'" fill="transparent"/>'
+    + '</svg>';
+
+  var plot = document.getElementById('plot');
+  plot.insertAdjacentHTML('afterbegin', svg);
+  var tt = document.getElementById('tt');
+  var svgEl = plot.querySelector('svg');
+  var hover = plot.querySelector('#hover');
+
+  function show(i, clientX, clientY){
+    var prev = i ? cum[i-1] : 0, day = cum[i] - prev;
+    hover.innerHTML = '<line x1="'+x(i).toFixed(1)+'" x2="'+x(i).toFixed(1)+'" y1="'+MT+'" y2="'+(MT+ih)+'" stroke="var(--ink-3)" stroke-width="1"/>'
+      + '<circle cx="'+x(i).toFixed(1)+'" cy="'+y(cum[i]).toFixed(1)+'" r="5" fill="var(--paper-2)" stroke="var(--gain)" stroke-width="2.5"/>';
+    tt.innerHTML = '<div class="d">день '+(i+1)+'</div>'
+      + '<div class="v">итог: '+fmt(cum[i])+'</div>'
+      + '<div class="v" style="color:'+(day>=0?'var(--gain)':'var(--loss)')+'">за день: '+fmt(Math.round(day))+'</div>';
+    var r = plot.getBoundingClientRect();
+    var px = clientX - r.left, py = clientY - r.top;
+    tt.style.left = Math.min(Math.max(px + 14, 4), r.width - tt.offsetWidth - 4) + 'px';
+    tt.style.top = Math.max(py - tt.offsetHeight - 12, 4) + 'px';
+    tt.classList.add('on');
+  }
+  function hide(){ hover.innerHTML = ''; tt.classList.remove('on'); }
+  function idxFrom(clientX){
+    var r = svgEl.getBoundingClientRect();
+    var vx = (clientX - r.left) / r.width * W;
+    var i = Math.round((vx - ML) / iw * (cum.length - 1));
+    return Math.min(Math.max(i, 0), cum.length - 1);
+  }
+  svgEl.addEventListener('mousemove', function(e){ show(idxFrom(e.clientX), e.clientX, e.clientY); });
+  svgEl.addEventListener('mouseleave', hide);
+  svgEl.addEventListener('touchmove', function(e){
+    var t = e.touches[0]; show(idxFrom(t.clientX), t.clientX, t.clientY);
+  }, {passive:true});
+  svgEl.addEventListener('touchend', hide);
+
+  var tb = document.querySelector('#datatable tbody');
+  tb.innerHTML = cum.map(function(v,i){
+    var day = v - (i ? cum[i-1] : 0);
+    return '<tr><td>'+(i+1)+'</td><td style="color:'+(day>=0?'var(--gain)':'var(--loss)')+'">'+fmt(Math.round(day))+'</td><td>'+fmt(v)+'</td></tr>';
+  }).join('');
+})();
+</script>
