@@ -5,28 +5,28 @@
   ],
   "artboards": [
     { "file": "Main.dc.html", "title": "Pipeline", "x": 0, "y": 0, "w": 390, "h": 844, "page": "page-1", "is_interactive": true },
-    { "file": "Deal.dc.html", "title": "Deal detail", "x": 470, "y": 0, "w": 390, "h": 844, "page": "page-1" },
-    { "file": "Screening.dc.html", "title": "Inbound screen", "x": 940, "y": 0, "w": 390, "h": 844, "page": "page-1" },
-    { "file": "Actions.dc.html", "title": "Actions", "x": 1410, "y": 0, "w": 390, "h": 844, "page": "page-1" },
+    { "file": "Deal.dc.html", "title": "Deal detail", "x": 490, "y": 0, "w": 390, "h": 844, "page": "page-1" },
+    { "file": "Screening.dc.html", "title": "Inbound screen", "x": 980, "y": 0, "w": 390, "h": 844, "page": "page-1" },
+    { "file": "Actions.dc.html", "title": "Actions", "x": 1470, "y": 0, "w": 390, "h": 844, "page": "page-1" },
     { "file": "AltTerminal.dc.html", "title": "Direction A — Terminal", "x": 0, "y": 0, "w": 390, "h": 844, "page": "page-2" },
-    { "file": "AltBoard.dc.html", "title": "Direction B — Stage board", "x": 470, "y": 0, "w": 390, "h": 844, "page": "page-2" }
+    { "file": "AltBoard.dc.html", "title": "Direction B — Stage board", "x": 490, "y": 0, "w": 390, "h": 844, "page": "page-2" }
   ],
   "annotations": [
     {
       "id": "screens-brief",
       "x": 0,
-      "y": -230,
-      "w": 860,
+      "y": -250,
+      "w": 880,
       "page": "page-1",
-      "text": "Deal Flow — warm paper, ink type, chroma reserved for deal status.\nOn track #2f6b4a · At risk #96650f · Delayed #a63c28. Nothing else in the UI is coloured.\nType: Newsreader for mandate names, IBM Plex Sans for UI, IBM Plex Mono for every figure and date.\nStage filter on Pipeline is live; the other three screens are static. Sample deals and dates are fictional."
+      "text": "Deal Flow — warm paper, ink type, chroma reserved for deal status.\nA date or flag is coloured only when it wants attention: at risk #96650f, delayed #a63c28, and #d6a13f for the same amber on an ink ground. On track is #2f6b4a on the card rail and muted everywhere else.\nType: Newsreader for mandate names, IBM Plex Sans for UI, IBM Plex Mono for every figure and date.\nStage filter on Pipeline is live; the other three screens are static. The book runs to 12 mandates, 8 of them written out. All deals, people and dates are fictional."
     },
     {
       "id": "directions-brief",
       "x": 0,
-      "y": -230,
-      "w": 860,
+      "y": -250,
+      "w": 880,
       "page": "page-2",
-      "text": "Two alternates for the Pipeline screen, kept beside the deliverable rather than instead of it.\nA — Terminal: dark, all-mono, one row per mandate, ~12 visible at once. Fastest to scan on a desk; harsher on a phone in a taxi.\nB — Stage board: swipe one stage column at a time, generous cards. Reads the process as a process; costs you the cross-book view."
+      "text": "Two alternates for the Pipeline screen, kept beside the deliverable rather than instead of it.\nA — Terminal: dark, all-mono, one row per mandate, 8 on screen without scrolling. Fastest to scan at a desk; harsher on a phone in a taxi.\nB — Stage board: swipe one stage column at a time, generous cards. Reads the process as a process; costs you the cross-book view."
     }
   ],
   "launch": { "view": "canvas", "page": "page-1" }
