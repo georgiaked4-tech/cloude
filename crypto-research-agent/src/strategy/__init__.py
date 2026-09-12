@@ -1,0 +1,2 @@
+"""Deterministic trading strategies."""
+
