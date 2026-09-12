@@ -9,15 +9,21 @@ from decimal import Decimal
 MINUTES_IN_YEAR = Decimal(365 * 24 * 60)
 MS_IN_MINUTE = 60_000
 _UNIT_MINUTES = {"m": 1, "h": 60, "d": 60 * 24, "w": 60 * 24 * 7}
+# Регистр значим: в CCXT "1M" — это месяц, а "1m" — минута. Приведение к
+# нижнему регистру превратило бы месячную свечу в минутную, поэтому месяц и
+# любые другие неподдерживаемые единицы отвергаются явной ошибкой.
 _PATTERN = re.compile(r"^(\d+)([mhdw])$")
 
 
 def timeframe_minutes(timeframe: str) -> int:
     """Длительность одной свечи в минутах: "1h" → 60, "15m" → 15."""
 
-    match = _PATTERN.match(timeframe.strip().lower())
+    match = _PATTERN.match(timeframe.strip())
     if match is None:
-        raise ValueError(f"Не удалось разобрать таймфрейм {timeframe!r}")
+        raise ValueError(
+            f"Таймфрейм {timeframe!r} не поддерживается: ожидается число и "
+            "единица m/h/d/w в нижнем регистре"
+        )
     amount, unit = int(match.group(1)), match.group(2)
     if amount <= 0:
         raise ValueError(f"Таймфрейм {timeframe!r} должен быть положительным")

@@ -10,6 +10,8 @@ import yaml
 from pydantic import BaseModel, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from src.core.timeframe import timeframe_minutes
+
 
 class Secrets(BaseSettings):
     """Секреты проекта, которые никогда не попадают в YAML."""
@@ -42,6 +44,29 @@ class TradingConfig(BaseModel):
     taker_fee_pct: Decimal = Decimal("0.055")
     slippage_pct: Decimal = Decimal("0.05")
 
+    @field_validator("timeframe")
+    @classmethod
+    def validate_timeframe(cls, value: str) -> str:
+        timeframe_minutes(value)
+        return value
+
+    @field_validator("initial_balance")
+    @classmethod
+    def validate_balance(cls, value: Decimal) -> Decimal:
+        if value <= 0:
+            raise ValueError("initial_balance должен быть положительным")
+        return value
+
+    @field_validator("taker_fee_pct", "slippage_pct")
+    @classmethod
+    def validate_costs(cls, value: Decimal) -> Decimal:
+        # Отрицательная комиссия или проскальзывание улучшали бы цену сделки и
+        # рисовали бы прибыль там, где её нет, поэтому опечатка в знаке ловится
+        # на загрузке конфига.
+        if value < 0:
+            raise ValueError("Комиссия и проскальзывание не могут быть отрицательными")
+        return value
+
 
 class StrategyConfig(BaseModel):
     fast_ema: int = 12
@@ -62,6 +87,24 @@ class RiskConfig(BaseModel):
     daily_loss_limit_pct: Decimal = Decimal("3")
     stop_loss_pct: Decimal = Decimal("2")
     take_profit_pct: Decimal = Decimal("4")
+
+    @field_validator(
+        "max_position_pct", "daily_loss_limit_pct", "stop_loss_pct", "take_profit_pct"
+    )
+    @classmethod
+    def validate_percentages(cls, value: Decimal) -> Decimal:
+        # Стоп обязателен для каждой позиции, поэтому нулевой или отрицательный
+        # процент риска недопустим; доля больше 100% тоже лишена смысла.
+        if not 0 < value <= 100:
+            raise ValueError("Процент риска должен быть в диапазоне (0, 100]")
+        return value
+
+    @field_validator("max_open_positions")
+    @classmethod
+    def validate_max_open_positions(cls, value: int) -> int:
+        if value < 1:
+            raise ValueError("max_open_positions должен быть не меньше 1")
+        return value
 
 
 class StorageConfig(BaseModel):

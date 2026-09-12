@@ -20,3 +20,13 @@ def test_threshold_filters_out_irrelevant_news() -> None:
     client = make_client(min_relevance=2)
     assert client.relevance("Bitcoin rally", "") < client.news.min_relevance
     assert client.relevance("SEC and Bitcoin", "") >= client.news.min_relevance
+
+
+def test_short_tickers_do_not_match_inside_other_words() -> None:
+    client = NewsClient(
+        NewsConfig(feeds=[], keywords=["eth", "sec"], min_relevance=1), ExchangeConfig()
+    )
+    # "eth" внутри "whether"/"together" и "sec" внутри "insects" — не новости о крипте.
+    assert client.relevance("Whether they go together", "") == 0
+    assert client.relevance("Insects study", "") == 0
+    assert client.relevance("ETH and SEC", "") == 2

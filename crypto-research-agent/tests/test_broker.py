@@ -40,7 +40,9 @@ def test_stop_loss_closes_position_and_counts_both_fees() -> None:
     broker = make_broker()
     broker.open_long(1, buy_signal())
     position = broker.positions["BTC/USDT"]
-    trade = broker.process_price("BTC/USDT", position.stop_price, position.stop_price, 2)
+    trade = broker.process_price(
+        "BTC/USDT", position.stop_price, position.stop_price, position.stop_price, 2
+    )
     assert trade is not None
     assert trade.exit_reason == "stop_loss"
     assert trade.fee > Decimal("0.11")
@@ -51,7 +53,9 @@ def test_take_profit_closes_position() -> None:
     broker = make_broker()
     broker.open_long(1, buy_signal())
     position = broker.positions["BTC/USDT"]
-    trade = broker.process_price("BTC/USDT", position.take_price, position.take_price, 2)
+    trade = broker.process_price(
+        "BTC/USDT", position.take_price, position.take_price, position.take_price, 2
+    )
     assert trade is not None
     assert trade.exit_reason == "take_profit"
     assert trade.pnl > 0
@@ -108,3 +112,27 @@ def test_set_state_restores_daily_counters() -> None:
     )
     # Убыток 500 при лимите 3% от 10000 = 300 — новые входы запрещены.
     assert decision.allowed is False
+
+
+def test_stop_gap_fills_at_the_open_not_at_the_trigger() -> None:
+    broker = make_broker()
+    broker.open_long(1, buy_signal())
+    position = broker.positions["BTC/USDT"]
+    gap_open = position.stop_price * Decimal("0.9")
+    # Свеча открылась ниже стопа и выше него не торговалась.
+    trade = broker.process_price("BTC/USDT", gap_open, gap_open, gap_open, 2)
+    assert trade is not None
+    assert trade.exit_reason == "stop_loss"
+    assert trade.exit_price < position.stop_price
+
+
+def test_favourable_gap_does_not_improve_take_profit() -> None:
+    broker = make_broker()
+    broker.open_long(1, buy_signal())
+    position = broker.positions["BTC/USDT"]
+    gap_open = position.take_price * Decimal("1.5")
+    trade = broker.process_price("BTC/USDT", gap_open, gap_open, gap_open, 2)
+    assert trade is not None
+    assert trade.exit_reason == "take_profit"
+    # Тейк исполняется по своей цене с проскальзыванием, а не по подарочному гэпу.
+    assert trade.exit_price < position.take_price

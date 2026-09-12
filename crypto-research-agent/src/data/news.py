@@ -4,12 +4,21 @@ from __future__ import annotations
 
 import asyncio
 import calendar
+import re
 from dataclasses import dataclass
+from functools import lru_cache
 
 import feedparser
 import httpx
 
 from src.core.config import ExchangeConfig, NewsConfig
+
+
+@lru_cache(maxsize=256)
+def _keyword_pattern(keyword: str) -> re.Pattern[str]:
+    """Регулярное выражение для ключевого слова с границами слова."""
+
+    return re.compile(rf"(?<!\w){re.escape(keyword)}(?!\w)", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -52,12 +61,14 @@ class NewsClient:
     def relevance(self, title: str, summary: str) -> int:
         """Релевантность = число ключевых слов конфига, встреченных в тексте.
 
-        Оценка детерминированная и не обращается к LLM: фильтр новостей не
-        должен зависеть от модели.
+        Совпадение идёт по границам слов, а не по подстроке: короткий тикер
+        вроде "eth" иначе срабатывал бы на «whether» и «together» и протаскивал
+        нерелевантные новости в платный запрос дайджеста. Оценка
+        детерминированная и не обращается к LLM.
         """
 
-        text = f"{title} {summary}".lower()
-        return sum(1 for keyword in self.news.keywords if keyword.lower() in text)
+        text = f"{title} {summary}"
+        return sum(1 for keyword in self.news.keywords if _keyword_pattern(keyword).search(text))
 
     async def fetch_all(self) -> list[NewsItem]:
         """Загрузить ленты и оставить новости с релевантностью не ниже порога."""

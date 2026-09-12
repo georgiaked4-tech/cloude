@@ -37,7 +37,9 @@ class BacktestEngine:
                 self.broker.reset_utc_day(self.broker.equity({symbol: candle.open}))
                 current_day = candle_day
 
-            self.broker.process_price(symbol, candle.low, candle.high, candle.ts)
+            self.broker.process_price(
+                symbol, candle.open, candle.low, candle.high, candle.ts
+            )
             signal = self.strategy.on_candle(symbol, candle)
             if signal is not None:
                 signal_id += 1
@@ -51,7 +53,10 @@ class BacktestEngine:
         if symbol in self.broker.positions:
             last = candles[-1]
             self.broker.close_long(symbol, last.close, last.ts, "end_of_backtest")
-            equity.append(self.broker.balance)
+            # Принудительное закрытие происходит на той же последней свече,
+            # поэтому заменяем её отсчёт капитала, а не добавляем лишний бар:
+            # иначе комиссия выхода превратилась бы в отдельный период Sharpe.
+            equity[-1] = self.broker.balance
 
         return calculate_metrics(
             self.broker.closed_trades, equity, initial_balance, timeframe

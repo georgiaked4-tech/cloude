@@ -117,7 +117,12 @@ class PaperBroker:
         return trade
 
     def process_price(
-        self, symbol: str, candle_low: Decimal, candle_high: Decimal, ts: int
+        self,
+        symbol: str,
+        candle_open: Decimal,
+        candle_low: Decimal,
+        candle_high: Decimal,
+        ts: int,
     ) -> PaperTrade | None:
         """Проверить обязательные stop-loss/take-profit; при конфликте выбрать худший исход."""
 
@@ -125,8 +130,14 @@ class PaperBroker:
         if position is None:
             return None
         if candle_low <= position.stop_price:
-            return self.close_long(symbol, position.stop_price, ts, "stop_loss")
+            # Если свеча открылась гэпом ниже стопа, исполниться по стопу
+            # невозможно: цена такого уровня в этой свече не торговалась.
+            # Берём худшую из двух — цену открытия.
+            fill = min(position.stop_price, candle_open)
+            return self.close_long(symbol, fill, ts, "stop_loss")
         if candle_high >= position.take_price:
+            # Гэп вверх в пользу позиции не засчитываем: тейк исполняется по
+            # своей цене, иначе бэктест присваивал бы себе случайную прибыль.
             return self.close_long(symbol, position.take_price, ts, "take_profit")
         return None
 

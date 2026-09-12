@@ -109,6 +109,10 @@ news_items(id INTEGER PK, ts INTEGER, source TEXT, url TEXT UNIQUE,
         title TEXT, summary TEXT, relevance INTEGER);
 
 digests(date TEXT PK, content TEXT, sent_ts INTEGER);
+
+paper_state(symbol TEXT, timeframe TEXT, last_ts INTEGER, balance TEXT,
+        day_start_ts INTEGER, day_start_equity TEXT,
+        PRIMARY KEY(symbol, timeframe));   -- чекпоинт paper-режима
 ```
 
 Денежные величины хранятся как TEXT (строковое представление Decimal).

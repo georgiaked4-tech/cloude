@@ -15,12 +15,12 @@ from src.strategy.ema_cross import EmaCrossStrategy
 
 
 def main() -> None:
+    config = load_config()
     parser = argparse.ArgumentParser()
-    parser.add_argument("--symbol", default="BTC/USDT")
-    parser.add_argument("--timeframe", default="1h")
+    parser.add_argument("--symbol", default=config.trading.symbols[0])
+    parser.add_argument("--timeframe", default=config.trading.timeframe)
     args = parser.parse_args()
 
-    config = load_config()
     database = Database(config.project_root / config.storage.database_path)
     database.initialize()
     rows = database.load_candles(args.symbol, args.timeframe)
