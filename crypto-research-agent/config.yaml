@@ -1,0 +1,58 @@
+# Все денежные и процентные величины заданы строками — они читаются как Decimal.
+# Смена биржи — одна строка ниже.
+exchange:
+  name: bybit
+  market_type: spot
+  timeout_sec: 20
+  max_retries: 3
+  retry_backoff_sec: "1.0"
+
+market:
+  symbols:
+    - BTC/USDT
+    - ETH/USDT
+  timeframe: 1h
+  candles_limit: 1000
+
+costs:
+  taker_fee_pct: "0.055"   # комиссия тейкера, % от объёма сделки
+  slippage_pct: "0.05"     # проскальзывание, % от цены в худшую сторону
+
+risk:
+  initial_balance: "10000"
+  max_position_pct: "2"
+  max_open_positions: 3
+  daily_loss_limit_pct: "3"
+  stop_loss_pct: "1.5"
+  take_profit_pct: "3"
+
+strategy:
+  name: ema_cross
+  params:
+    fast_period: 12
+    slow_period: 26
+
+news:
+  feeds:
+    - https://cointelegraph.com/rss
+    - https://www.coindesk.com/arc/outboundfeeds/rss/
+  keywords:
+    - bitcoin
+    - ethereum
+    - sec
+    - regulation
+    - etf
+    - hack
+  min_relevance: 1
+  max_items: 40
+
+research:
+  model: claude-sonnet-4-5
+  max_tokens: 2000
+
+logging:
+  level: INFO
+  json: false
+
+db:
+  path: data/agent.db
