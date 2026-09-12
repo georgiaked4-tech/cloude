@@ -1,0 +1,2 @@
+"""Text-only research layer."""
+
