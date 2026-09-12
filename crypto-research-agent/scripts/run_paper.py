@@ -150,7 +150,7 @@ def main() -> None:
 
     processed = 0
     last_signal = None
-    last_action = "Новых закрытых свечей нет"
+    last_action: str | None = None
     day_start_ts, day_start_equity = state.day_start_ts, state.day_start_equity
     for candle in candles:
         if candle.ts <= state.last_ts:
@@ -215,6 +215,12 @@ def main() -> None:
                 connection=connection,
             )
 
+    if last_action is None:
+        # Разделяем «свечей не было» и «свеча была, но делать нечего».
+        last_action = (
+            "Сигнала нет, позиция без изменений" if processed
+            else "Новых закрытых свечей нет"
+        )
     position = broker.positions.get(symbol)
     result = {
         "mode": "paper",

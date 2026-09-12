@@ -102,6 +102,16 @@ def test_first_run_trades_the_newest_candle_only(monkeypatch, capsys, project) -
     assert state is not None and state.last_ts == rows[-1][0]
 
 
+def test_quiet_candle_is_not_reported_as_a_missing_candle(monkeypatch, capsys, project) -> None:
+    rows = make_rows(PRICES + ["405"])
+    now = rows[-1][0] + HOUR_MS
+    result = run_once(monkeypatch, capsys, project, rows, now)
+    # Свеча обработана, сигнала не было — это не то же самое, что «свечей нет».
+    assert result["closed_candles_processed"] == 1
+    assert result["last_signal"] is None
+    assert result["action"] == "Сигнала нет, позиция без изменений"
+
+
 def test_position_survives_restart_without_reopening(monkeypatch, capsys, project) -> None:
     rows = make_rows(PRICES)
     now = rows[-1][0] + HOUR_MS
