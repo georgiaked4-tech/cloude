@@ -1,0 +1,8 @@
+{
+  "name": "global-macro",
+  "version": "0.1.0",
+  "description": "Global macro, liquidity, rates and cross-asset intelligence: 24/7 monitoring of macro data, central banks, funding markets, sovereign bonds and carry trade with Russian-language alerts and regime detection",
+  "author": {
+    "name": "Anthropic FSI"
+  }
+}

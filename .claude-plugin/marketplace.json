@@ -30,6 +30,11 @@
       "description": "Wealth management and financial advisory tools: client reviews, financial planning, portfolio analysis, and client reporting"
     },
     {
+      "name": "global-macro",
+      "source": "./global-macro",
+      "description": "Global macro, liquidity, rates and cross-asset intelligence: 24/7 monitoring of macro data, central banks, funding markets, sovereign bonds and carry trade with Russian-language alerts and regime detection"
+    },
+    {
       "name": "lseg",
       "source": "./partner-built/lseg",
       "description": "Price bonds, analyze yield curves, evaluate FX carry trades, value options, and build macro dashboards using LSEG financial data and analytics."
